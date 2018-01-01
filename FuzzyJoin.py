@@ -11,9 +11,9 @@ def FuzzyJoin(tbl1, tbl2, by, stop_words = []):
     fkeys = tbl2[by[-1]]
 
     ############Testing for the Practie Titles##########
-    centers_l = [[w.lower() for w in word_tokenize(center) if w not in stop_words]
+    centers_l = [[w.subl() for w in word_tokenize(center) if w not in stop_words]
                 for center in list(centers)]
-    centers_set = set(chain.from_iterable(centers_l)) + stop_words
+    centers_set = set(chain.from_iterable(centers_l))
     center_vectors = pd.DataFrame(np.zeros([len(centers_l),len(centers_set)]),
                                 columns = centers_set)
 
@@ -39,6 +39,12 @@ def FuzzyJoin(tbl1, tbl2, by, stop_words = []):
 
     return(pd.merge(tbl1,tbl2, how='inner', on=by[0]))
 
+    d = {'mfm':"maternal fetal medicine", "cardi":'cardiology',"card":'cardiology',"prac":'practice', "obx":'obstetrix',"ped":'pediatrics',"peds":'pediatrics',"peri":'perinatal'}
+    def subDict(d, words):
+	words = re.sub(r'\b' + '|'.join(d.keys()) + r'\b', lambda m: d[m.group(0)], words)
+        return words
+    
+            
     
     ##Now this is definitely a baseline method. Needs Improving:
     ##1. How to quantify the flexibility. Should "The Middlebury Clinic" match with
