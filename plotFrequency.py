@@ -9,7 +9,7 @@ plotFrequency <- function(data, cat, head_count, fill_color,horz){
     ggplot(aes(x=cat,y=n)) +
     geom_bar(stat='identity', colour='white', fill=fill_color) +
     geom_text(aes(x=cat,y=1, label=paste0("(",n,")")),vjust=.5,hjust=0,colour='black',fontface='bold') +
-    labs(x="cat",title="10 Most Popular cats",y="Count")+
+    labs(x=cat,title=paste0("Frequency Plot of ",cat,sep=""),y="Count")+
     theme_bw()
     
     if(horz){
